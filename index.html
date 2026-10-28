@@ -1853,6 +1853,7 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
   function f(){if(n)n.classList.toggle("scrolled",window.scrollY>40)}
   window.addEventListener("scroll",f,{passive:true});f();
   var z=document.getElementById("heroZip");if(!z)return;
+  var zi=document.getElementById("heroZipIn");if(zi)zi.placeholder=document.documentElement.lang==="es"?"Su código postal":"Your ZIP code";
   z.addEventListener("submit",function(e){
     e.preventDefault();
     var v=(document.getElementById("heroZipIn").value||"").replace(/\D/g,"").slice(0,5);
