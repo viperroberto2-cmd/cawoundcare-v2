@@ -611,6 +611,10 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
 .cta__img::after{background:linear-gradient(180deg,var(--bg) 0%,rgba(246,217,226,.88) 45%,rgba(238,196,210,.96) 100%)!important}
 .pricing-second-card{background:#F6DCE4!important}
 .wordmark{font-size:12.1vw!important;letter-spacing:0!important}
+/* entrada del título v2 (no es el matrix de NewLife): palabra por palabra, desenfoque -> nítido */
+.mtitle .w{display:inline-block;opacity:0;filter:blur(12px);transform:translateY(16px);animation:mword 1s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes mword{to{opacity:1;filter:blur(0);transform:none}}
+@media (prefers-reduced-motion:reduce){.mtitle .w{animation:none;opacity:1;filter:none;transform:none}}
 @media (max-width:767px){
   .mhero-in{padding:110px 0 70px}
   .mhero-zip .btn{padding:0 18px;font-size:13px}
@@ -654,7 +658,7 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
   <div class="mhero-veil" aria-hidden="true"></div>
   <div class="mhero-in">
     <p class="mhero-k" data-a="load-opacity"><span lang="en">California · Medicare · Medi-Cal</span><span lang="es">California · Medicare · Medi-Cal</span></p>
-    <h1 class="vhero-t" data-mx><span lang="en">Wound care that comes to your door</span><span lang="es">Cuidado de heridas que llega a su puerta</span></h1>
+    <h1 class="vhero-t mtitle"><span lang="en">Wound care that comes to your door</span><span lang="es">Cuidado de heridas que llega a su puerta</span></h1>
     <p class="mhero-p" data-a="load-opacity"><span lang="en">In the comfort of your home, for wounds that have stopped getting better. Hablamos español.</span><span lang="es">En la comodidad de su hogar, para heridas que dejaron de mejorar. Atendemos en español e inglés.</span></p>
     <form class="mhero-zip" id="heroZip" data-a="load-opacity" novalidate>
       <label class="sr-only" for="heroZipIn"><span lang="en">ZIP code</span><span lang="es">Código postal</span></label>
@@ -1849,6 +1853,11 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
 <script>
 /* v2: menú esmerilado al bajar; el código postal del hero pasa al cuestionario */
 (function(){
+  /* título: cada palabra en su span con retraso escalonado */
+  document.querySelectorAll(".mtitle [lang]").forEach(function(sp){
+    var ps = sp.textContent.trim().split(/\s+/);
+    sp.innerHTML = ps.map(function(w,i){return '<span class="w" style="animation-delay:'+(0.25+i*0.12).toFixed(2)+'s">'+w+'</span>'}).join(" ");
+  });
   var n=document.querySelector(".nav");
   function f(){if(n)n.classList.toggle("scrolled",window.scrollY>40)}
   window.addEventListener("scroll",f,{passive:true});f();
