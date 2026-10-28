@@ -611,6 +611,27 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
 .cta__img::after{background:linear-gradient(180deg,var(--bg) 0%,rgba(246,217,226,.88) 45%,rgba(238,196,210,.96) 100%)!important}
 .pricing-second-card{background:#F6DCE4!important}
 .wordmark{font-size:12.1vw!important;letter-spacing:0!important}
+/* servicios v2: cuadrícula de tarjetas planas (no la cinta curva de NewLife) */
+.ribbon .outer-curve-top,.ribbon .outer-curve{display:none}
+.ribbon .heroimagecontainer{margin-top:48px;background:transparent}
+.ribbon .project-content-wp{overflow:visible}
+.ribbon .project-content-wps{display:block;width:auto;transform:none!important}
+.ribbon .project-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;width:90vw;max-width:1200px;margin:0 auto;padding:0}
+.ribbon .projectcardinfo{width:auto;height:auto;flex:initial;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+  background:var(--card);border-radius:12px;padding:10px 10px 22px;overflow:hidden;text-align:left;transition:background .25s}
+.ribbon .projectcardinfo:hover{background:#FFF7FA}
+.ribbon .projectcardinfo img,.ribbon .projectcardinfo video{position:static;width:100%;height:auto;aspect-ratio:4/3;border-radius:8px}
+.ribbon .maskimageproject{display:none}
+.ribbon .floatinglabelnameproject{position:static;align-items:flex-start;text-align:left;padding:16px 8px 0;gap:8px}
+.ribbon .projectname{font:500 21px/1.2 var(--display);font-stretch:112%;color:var(--ink);text-transform:none;text-shadow:none}
+.ribbon .textcategory{color:var(--coral);text-shadow:none;font-weight:600;letter-spacing:.06em;font-size:13px}
+.ribbon .svc-pend{top:20px;left:20px;transform:none}
+@media (max-width:767px){
+  .ribbon .project-list{grid-template-columns:repeat(2,1fr);gap:10px}
+  .ribbon .projectcardinfo{padding:6px 6px 16px}
+  .ribbon .projectname{font-size:16px}
+  .ribbon .svc-pend{top:12px;left:12px;font-size:9px;padding:5px 8px}
+}
 /* entrada del título v2 (no es el matrix de NewLife): palabra por palabra, desenfoque -> nítido */
 .mtitle .w{display:inline-block;opacity:0;filter:blur(12px);transform:translateY(16px);animation:mword 1s cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes mword{to{opacity:1;filter:blur(0);transform:none}}
@@ -675,7 +696,7 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
   <div class="headersection">
     <p class="titlelabel" data-a="chars-scroll"><span lang="en">Services</span><span lang="es">Servicios</span></p>
     <h2 class="h2-about ribbon-h" id="t-ribbon" data-a="lines"><span lang="en">What we do at home</span><span lang="es">Lo que hacemos en su casa</span></h2>
-    <p class="ribbon-hint" data-a="opacity"><span lang="en">Tap a service to see more</span><span lang="es">Toque un servicio para ver más</span></p>
+    <p class="ribbon-hint" data-a="opacity"><span lang="en">Choose a service to see what happens at the visit</span><span lang="es">Elija un servicio para ver qué pasa en la visita</span></p>
   </div>
   <div class="heroimagecontainer" data-a="hero-image">
     <div class="project-content-wp">
@@ -1573,7 +1594,7 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
 
   /* ---------- Hero: 4 copias de la lista de tarjetas (terrot tiene 4) ---------- */
   var track=$("#heroTrack"),list=$(".project-list",track);
-  for(var i=0;i<3;i++){var c=list.cloneNode(true);c.setAttribute("aria-hidden","true");
+  for(var i=0;i<0;i++){var c=list.cloneNode(true);c.setAttribute("aria-hidden","true");
     $$("button",c).forEach(function(b){b.tabIndex=-1});track.appendChild(c)}   /* las copias no entran al Tab */
 
   /* ---------- Ficha de servicio: se abre al tocar una tarjeta de la cinta (#servicio-<id> enlazable) ---------- */
@@ -1787,7 +1808,7 @@ h1,h2,h3,.h2-about,.titlesectionmedium,.servicename,.nav-link,.door-t,.projectna
       gsap.fromTo(el,{opacity:0},{opacity:1,duration:1,delay:.13,ease:"power2.out"})});
 
     /* cinta de tarjetas del hero: x -25% -> -75%, 45 s, power2.out, repeat -1 */
-    var heroTw=gsap.fromTo("#heroTrack",{xPercent:-25},{xPercent:-75,duration:45,ease:"power2.out",repeat:-1});
+    var heroTw={pause:function(){},resume:function(){}};   /* v2: cuadrícula fija, sin cinta que se deslice */
     /* la cinta se detiene mientras alguien la toca o apunta, para que pueda elegir un servicio */
     var rib=$("#services .project-content-wp");
     if(rib){["mouseenter","touchstart","focusin"].forEach(function(ev){rib.addEventListener(ev,function(){heroTw.pause()},{passive:true})});
